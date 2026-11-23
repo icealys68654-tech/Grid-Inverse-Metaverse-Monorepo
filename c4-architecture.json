@@ -1,0 +1,24 @@
+{
+  "title": "Grid Inverse Metaverse Full-Stack C4 Model",
+  "people": [
+    { "id": "operator", "name": "Grid Operator" }
+  ],
+  "systems": [
+    { "id": "grid_system", "name": "Grid Schema-Validated Platform" }
+  ],
+  "containers": [
+    { "id": "web_ui", "name": "Crystalline Grid Frontend", "parentId": "grid_system", "tech": "HTML5/SVG/ESM" },
+    { "id": "api_gateway", "name": "Schema-Enforced API Gateway", "parentId": "grid_system", "tech": "Node.js HTTP" },
+    { "id": "vector_engine", "name": "12D Vector Parse Phase", "parentId": "grid_system", "tech": "Python 3" }
+  ],
+  "components": [
+    { "id": "load_city", "name": "loadCity() Gatekeeper", "parentId": "api_gateway" },
+    { "id": "disc_core", "name": "Disc Core Anchor", "parentId": "web_ui" }
+  ],
+  "relationships": [
+    { "from": "operator", "to": "web_ui", "label": "Inspects Grid & C4 Topology", "protocol": "HTTPS" },
+    { "from": "web_ui", "to": "api_gateway", "label": "Fetches Validated City Payload", "protocol": "REST/JSON" },
+    { "from": "api_gateway", "to": "load_city", "label": "Enforces BuildingSchema & CitySchema", "protocol": "In-Process" },
+    { "from": "vector_engine", "to": "api_gateway", "label": "Supplies 12D Flattened Vectors", "protocol": "JSONL" }
+  ]
+}

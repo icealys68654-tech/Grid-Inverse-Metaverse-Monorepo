@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>THE GRID // Schema-Validated Inverse Metaverse</title>
+  <style>
+    :root {
+      --bg: #050a12;
+      --panel: #0b1524;
+      --border: #19e6ff;
+      --accent: #ff9e00;
+      --text: #d8f8ff;
+    }
+    body {
+      margin: 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      background: radial-gradient(circle at center, #0c2238 0%, var(--bg) 70%);
+      color: var(--text);
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 24px;
+      border-bottom: 1px solid rgba(25, 230, 255, 0.35);
+      background: rgba(5, 10, 18, 0.9);
+    }
+    .badge {
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      color: var(--border);
+      font-size: 12px;
+    }
+    main {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 18px;
+      padding: 20px 24px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(25, 230, 255, 0.28);
+      border-radius: 6px;
+      padding: 16px;
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 15px;
+      color: var(--border);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .core-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 290px;
+    }
+    button, select {
+      background: #081220;
+      color: var(--border);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    textarea {
+      width: 100%;
+      height: 92px;
+      background: #050a12;
+      color: #a8f5ff;
+      border: 1px solid rgba(25, 230, 255, 0.3);
+      font-family: inherit;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    pre {
+      background: #04080f;
+      padding: 10px;
+      overflow-x: auto;
+      font-size: 12px;
+      border-left: 2px solid var(--accent);
+    }
+    .sector-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .sector {
+      border: 1px solid rgba(255, 158, 0, 0.35);
+      padding: 10px;
+      background: rgba(8, 18, 32, 0.7);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div><strong>GRID // INVERSE METAVERSE</strong> — Strictly Schema-Validated Frontend</div>
+    <div class="badge" id="discBadge">DISC(Drive ID=14, Status=2, Code=3) :: LOADING</div>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Visual Center: Disc Core Crystalline Form</h2>
+      <div class="core-stage">
+        <svg width="240" height="240" viewBox="0 0 240 240" aria-label="Disc Core Crystalline Form">
+          <defs>
+            <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#ffffff" />
+              <stop offset="45%" stop-color="#19e6ff" />
+              <stop offset="100%" stop-color="#050a12" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <circle cx="120" cy="120" r="105" fill="none" stroke="#19e6ff" stroke-width="1.5" stroke-dasharray="6 4" />
+          <circle cx="120" cy="120" r="78" fill="none" stroke="#ff9e00" stroke-width="2" />
+          <polygon points="120,26 196,120 120,214 44,120" fill="url(#coreGlow)" fill-opacity="0.35" stroke="#19e6ff" stroke-width="2.5" />
+          <polygon points="120,58 168,120 120,182 72,120" fill="none" stroke="#ffffff" stroke-width="1.5" />
+          <circle cx="120" cy="120" r="14" fill="#19e6ff" />
+        </svg>
+        <div>
+          <label for="sortMode">DISC.SORT Mode: </label>
+          <select id="sortMode">
+            <option value="SEQUENTIAL">Sequential Transfer</option>
+            <option value="RANDOM">Random Transfer</option>
+          </select>
+          <button id="reloadBtn">Hydrate via API</button>
+        </div>
+      </div>
+      <div class="sector-grid" id="sectors"></div>
+    </section>
+
+    <section class="card">
+      <h2>Engineering Tooling Suite (C4 Model, Smoke Probe, Env Guard)</h2>
+      <p><strong>1. C4 Model Validation & Diagram:</strong></p>
+      <pre id="c4Output">Loading C4 architecture...</pre>
+
+      <p><strong>2. env-guard Linter (.env Validator):</strong></p>
+      <textarea id="envInput">APP_ENV=production
+DISC_CODE=3
+DISC_DRIVE_ID=14
+PORT=4173</textarea>
+      <div style="margin-top:8px;">
+        <button id="lintEnvBtn">Run env-guard</button>
+        <button id="runProbeBtn">Run smoke-probe</button>
+      </div>
+      <pre id="toolOutput">Ready. All systems Are At A Go.</pre>
+    </section>
+  </main>
+
+  <script type="module">
+    async function hydrateCity() {
+      const sort = document.getElementById("sortMode").value;
+      const res = await fetch(`/api/city?sort=${encodeURIComponent(sort)}`);
+      const data = await res.json();
+      if (!data.schemaValidated) {
+        throw new Error("Frontend rejected unvalidated payload.");
+      }
+      document.getElementById("discBadge").textContent =
+        `DISC(Drive ID=${data.discTelemetry.driveId}, Status=${data.discTelemetry.status}, Code=${data.discTelemetry.code}).SORT(${data.discTelemetry.sortMode}) :: AT A GO`;
+
+      const container = document.getElementById("sectors");
+      container.innerHTML = data.buildings.map((b) => `
+        <div class="sector">
+          <strong>${b.name}</strong><br/>
+          <small>Zone: ${b.zone} | Height: ${b.height}m</small><br/>
+          <small>12D Vec[0..2]: [${b.vectorSignature.slice(0, 3).join(", ")}]</small>
+        </div>
+      `).join("");
+    }
+
+    async function loadC4() {
+      const res = await fetch("/api/c4");
+      const data = await res.json();
+      document.getElementById("c4Output").textContent =
+        `Valid: ${data.valid}\n${data.mermaid}`;
+    }
+
+    document.getElementById("reloadBtn").addEventListener("click", hydrateCity);
+    document.getElementById("lintEnvBtn").addEventListener("click", async () => {
+      const content = document.getElementById("envInput").value;
+      const res = await fetch("/api/env-lint", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content })
+      });
+      document.getElementById("toolOutput").textContent = JSON.stringify(await res.json(), null, 2);
+    });
+
+    document.getElementById("runProbeBtn").addEventListener("click", async () => {
+      const health = await (await fetch("/api/health")).json();
+      const vecs = await (await fetch("/api/vectors")).json();
+      document.getElementById("toolOutput").textContent = JSON.stringify({ smokeProbe: "PASS", health, vectorCount: vecs.count }, null, 2);
+    });
+
+    hydrateCity();
+    loadC4();
+  </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "@grid/inverse-metaverse-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "node apps/api-gateway/src/server.js",
+    "c4:validate": "node packages/c4-model/src/index.js validate",
+    "env:guard": "node packages/env-guard/src/index.js .env.example",
+    "smoke:probe": "node packages/smoke-probe/src/index.js --target http://localhost:4173",
+    "vector:bind": "python3 tools/vector_flatten_parser.py --root . --out dist/manifest_vectors.jsonl --drive-id 14 --status 2 --code 3 --sort sequential",
+    "ci:gate": "npm run c4:validate && npm run env:guard && npm run vector:bind"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
