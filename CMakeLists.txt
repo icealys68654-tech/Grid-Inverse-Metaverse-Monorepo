@@ -35,7 +35,13 @@ add_custom_target(smoke_probe
     COMMENT "Executing CI/CD end-to-end endpoint smoke probes"
 )
 
+add_custom_target(test_iso_discs
+    COMMAND ${NODE_EXE} --test packages/iso-discs-cis/test/iso-discs.test.js
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    COMMENT "Running ISO DISCS CIS MVC and registry tests"
+)
+
 add_custom_target(build_all ALL
-    DEPENDS validate_c4 lint_env vector_parse
-    COMMENT "Umbrella build complete: C4 validated, env linted, vectors bound"
+    DEPENDS validate_c4 lint_env vector_parse test_iso_discs
+    COMMENT "Umbrella build complete: C4 validated, env linted, vectors bound, ISO DISCS tested"
 )

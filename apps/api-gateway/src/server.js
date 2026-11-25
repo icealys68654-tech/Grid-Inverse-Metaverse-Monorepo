@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { loadCity } from "../../../packages/city-schema/src/index.js";
 import { validateC4Architecture, generateMermaidDiagram } from "../../../packages/c4-model/src/index.js";
 import { lintEnvContent } from "../../../packages/env-guard/src/index.js";
+import { handleISODiscRequest } from "./iso-discs-routes.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, "../../..");
@@ -65,8 +66,28 @@ function getValidatedCityState(sortMode = "SEQUENTIAL") {
   return loadCity(payload);
 }
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
+
+  if (url.pathname.startsWith("/api/iso-discs")) {
+    try {
+      const handled = await handleISODiscRequest(req, res, url);
+      if (handled) return;
+      res.writeHead(404, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "ISO DISCS endpoint not found" }));
+    } catch (err) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: err.message }));
+    }
+    return;
+  }
+
+  if (url.pathname === "/iso-discs") {
+    const dashboard = fs.readFileSync(path.join(ROOT_DIR, "apps/web-frontend/iso-discs.html"), "utf8");
+    res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+    res.end(dashboard);
+    return;
+  }
 
   if (url.pathname === "/api/health") {
     res.writeHead(200, { "Content-Type": "application/json" });
