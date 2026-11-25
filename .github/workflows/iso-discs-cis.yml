@@ -1,0 +1,18 @@
+name: ISO DISCS CIS MVC
+
+on:
+  push:
+    branches: [feat/iso-discs-cis-mvc]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Run ISO DISCS CIS unit and registry tests
+        run: npm run iso-discs:test
