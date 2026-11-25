@@ -36,7 +36,7 @@ add_custom_target(smoke_probe
 )
 
 add_custom_target(test_iso_discs
-    COMMAND ${NODE_EXE} --test packages/iso-discs-cis/test/*.test.js
+    COMMAND ${NODE_EXE} --test packages/iso-discs-cis/test/iso-discs.test.js
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     COMMENT "Running ISO DISCS CIS MVC and registry tests"
 )
