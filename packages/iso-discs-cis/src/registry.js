@@ -1,10 +1,11 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { ISODiscCIS } from "./model.js";
 
 export class DiscRegistry {
   constructor(filePath = new URL("../data/discs.json", import.meta.url)) {
-    this.filePath = filePath instanceof URL ? filePath : path.resolve(filePath);
+    this.filePath = filePath instanceof URL ? fileURLToPath(filePath) : path.resolve(filePath);
   }
   async list() {
     try {
@@ -49,7 +50,7 @@ export class DiscRegistry {
     };
   }
   async #write(records) {
-    const target = this.filePath instanceof URL ? this.filePath : path.resolve(this.filePath);
+    const target = this.filePath;
     const directory = path.dirname(target);
     await fs.mkdir(directory, { recursive: true });
     const temp = `${target}.${process.pid}.tmp`;
